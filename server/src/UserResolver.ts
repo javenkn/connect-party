@@ -5,10 +5,14 @@ import {
   Arg,
   ObjectType,
   Field,
+  Ctx,
+  UseMiddleware,
 } from "type-graphql";
 import { hash, compare } from "bcryptjs";
-import { sign } from "jsonwebtoken";
 import { User } from "./entity/User";
+import { Context } from "./context";
+import { createRefreshToken, createAccessToken } from "./auth";
+import { isAuth } from "./isAuth";
 
 @ObjectType()
 class LoginResponse {
@@ -23,6 +27,12 @@ export class UserResolver {
     return "hi";
   }
 
+  @Query(() => String)
+  @UseMiddleware(isAuth)
+  bye(@Ctx() { payload }: Context) {
+    return `your user id is: ${payload!.userId}`;
+  }
+
   @Query(() => [User])
   users() {
     return User.find();
@@ -31,7 +41,8 @@ export class UserResolver {
   @Mutation(() => LoginResponse)
   async login(
     @Arg("email") email: string,
-    @Arg("password") password: string
+    @Arg("password") password: string,
+    @Ctx() { res }: Context
   ): Promise<LoginResponse> {
     const user = await User.findOne({ where: { email } });
 
@@ -46,8 +57,13 @@ export class UserResolver {
     }
 
     //login successful
+
+    res.cookie("jid", createRefreshToken(user), {
+      httpOnly: true,
+    });
+
     return {
-      accessToken: sign({ userId: user.id }, "secret", { expiresIn: "15m" }),
+      accessToken: createAccessToken(user),
     };
   }
 
