@@ -3,6 +3,7 @@ import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
 import { createConnection } from "typeorm";
 import "reflect-metadata";
+import "dotenv/config";
 import { UserResolver } from "./UserResolver";
 
 (async () => {
@@ -16,6 +17,7 @@ import { UserResolver } from "./UserResolver";
     schema: await buildSchema({
       resolvers: [UserResolver],
     }),
+    context: ({ req, res }) => ({ req, res }),
   });
 
   apolloServer.applyMiddleware({ app });
