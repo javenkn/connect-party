@@ -37,6 +37,11 @@ import { sendRefreshToken } from "./sendRefreshToken";
       return res.send({ ok: false, accessToken: "" });
     }
 
+    if (user.tokenVersion !== payload.tokenVersion) {
+      // handles account issues (hacking, forgotten password, etc.)
+      return res.send({ ok: false, accessToken: "" });
+    }
+
     sendRefreshToken(res, createRefreshToken(user));
 
     return res.send({ ok: true, accessToken: createAccessToken(user) });
