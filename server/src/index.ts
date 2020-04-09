@@ -2,6 +2,7 @@ import express from "express";
 import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
 import { createConnection } from "typeorm";
+import cors from "cors";
 import cookieParser from "cookie-parser";
 import "reflect-metadata";
 import "dotenv/config";
@@ -14,6 +15,12 @@ import { sendRefreshToken } from "./sendRefreshToken";
 (async () => {
   const app = express();
 
+  app.use(
+    cors({
+      origin: "http://localhost:3000",
+      credentials: true,
+    })
+  );
   app.use(cookieParser());
   app.get("/", (_req, res) => res.send("hello world"));
 
@@ -56,7 +63,7 @@ import { sendRefreshToken } from "./sendRefreshToken";
     context: ({ req, res }) => ({ req, res }),
   });
 
-  apolloServer.applyMiddleware({ app });
+  apolloServer.applyMiddleware({ app, cors: false });
 
   app.listen(4000, () => {
     console.log("Listening on port 4000");
