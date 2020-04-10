@@ -1,20 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import { RouteComponentProps } from "react-router-dom";
 import { useLoginMutation, MeDocument, MeQuery } from "../generated/graphql";
 import { setAccessToken } from "../accessToken";
-
-export type LoginProps = {};
+import Form from "../components/Form";
 
 export const Login: React.FC<RouteComponentProps> = ({ history }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [login] = useLoginMutation();
 
   return (
-    <form
-      onSubmit={async (e) => {
+    <Form
+      onSubmit={async (e, email, password) => {
         e.preventDefault();
-        console.log("Form submitted");
+
         const response = await login({
           variables: {
             email,
@@ -38,21 +35,8 @@ export const Login: React.FC<RouteComponentProps> = ({ history }) => {
         }
         history.push("/");
       }}
-    >
-      Login
-      <input
-        value={email}
-        placeholder="email"
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        type="password"
-        value={password}
-        placeholder="password"
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button type="submit">Login</button>
-    </form>
+      buttonText="Login"
+    />
   );
 };
 
