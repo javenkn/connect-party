@@ -16,11 +16,14 @@ import { Context } from "./context";
 import { createRefreshToken, createAccessToken } from "./auth";
 import { isAuth } from "./isAuth";
 import { sendRefreshToken } from "./sendRefreshToken";
+import { verify } from "jsonwebtoken";
 
 @ObjectType()
 class LoginResponse {
   @Field()
   accessToken: string;
+  @Field(() => User)
+  user: User;
 }
 
 @Resolver()
@@ -39,6 +42,24 @@ export class UserResolver {
   @Query(() => [User])
   users() {
     return User.find();
+  }
+
+  @Query(() => User, { nullable: true })
+  me(@Ctx() context: Context) {
+    const authorization = context.req.headers.authorization;
+
+    if (!authorization) {
+      return null;
+    }
+
+    try {
+      const token = authorization.split(" ")[1];
+      const payload: any = verify(token, process.env.ACCESS_TOKEN_SECRET!);
+      return User.findOne(payload.userId);
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
   }
 
   @Mutation(() => Boolean)
@@ -73,6 +94,7 @@ export class UserResolver {
 
     return {
       accessToken: createAccessToken(user),
+      user,
     };
   }
 
