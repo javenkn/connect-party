@@ -9,14 +9,14 @@ import {
   UseMiddleware,
   Int,
 } from "type-graphql";
-import { hash, compare } from "bcryptjs";
+import { hash, compare } from "bcrypt";
 import { User } from "./entity/User";
 import { getConnection } from "typeorm";
+import { verify } from "jsonwebtoken";
 import { Context } from "./context";
 import { createRefreshToken, createAccessToken } from "./auth";
 import { isAuth } from "./isAuth";
 import { sendRefreshToken } from "./sendRefreshToken";
-import { verify } from "jsonwebtoken";
 
 @ObjectType()
 class LoginResponse {
@@ -28,11 +28,6 @@ class LoginResponse {
 
 @Resolver()
 export class UserResolver {
-  @Query(() => String)
-  hello() {
-    return "hi";
-  }
-
   @Query(() => String)
   @UseMiddleware(isAuth)
   bye(@Ctx() { payload }: Context) {

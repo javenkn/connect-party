@@ -1,13 +1,13 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useMeQuery, useLogoutMutation } from "../generated/graphql";
 import { setAccessToken } from "../accessToken";
 
-export type NavigationProps = {};
-
-export const Navigation: React.FC<NavigationProps> = () => {
+const Navigation: React.FC = () => {
   const { data, loading } = useMeQuery();
   const [logout, { client }] = useLogoutMutation();
+  const history = useHistory();
+
   let body: any = null;
 
   if (loading) {
@@ -40,6 +40,7 @@ export const Navigation: React.FC<NavigationProps> = () => {
                   await logout();
                   setAccessToken("");
                   await client!.resetStore();
+                  history.push("/");
                 }}
               >
                 Logout

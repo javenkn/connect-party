@@ -4,7 +4,7 @@ import { useLoginMutation, MeDocument, MeQuery } from "../generated/graphql";
 import { setAccessToken } from "../accessToken";
 import Form from "../components/Form";
 
-export const Login: React.FC<RouteComponentProps> = ({ history }) => {
+const Login: React.FC<RouteComponentProps> = ({ history }) => {
   const [login] = useLoginMutation();
 
   return (

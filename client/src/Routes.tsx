@@ -9,15 +9,13 @@ import Bye from "./pages/Bye";
 function Routes() {
   return (
     <BrowserRouter>
-      <>
-        <Navigation />
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/register" component={Register} />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/bye" component={Bye} />
-        </Switch>
-      </>
+      <Navigation />
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route exact path="/register" component={Register} />
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/bye" component={Bye} />
+      </Switch>
     </BrowserRouter>
   );
 }
