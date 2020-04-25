@@ -18,20 +18,17 @@ const Navigation: React.FC = () => {
     body = <h1>Please log in.</h1>;
   }
   return (
-    <header>
+    <header className="p-4 shadow">
       <nav>
-        <ul>
-          <li>
+        <ul className="flex justify-end">
+          <li className="ml-4 border-solid border-x-0 border-b-4 border-transparent hover:border-gray-600">
             <Link to="/">Home</Link>
           </li>
-          <li>
+          <li className="ml-4 border-solid border-x-0 border-b-4 border-transparent hover:border-gray-600">
             <Link to="/register">Register</Link>
           </li>
-          <li>
+          <li className="ml-4 border-solid border-x-0 border-b-4 border-transparent hover:border-gray-600">
             <Link to="/login">Login</Link>
-          </li>
-          <li>
-            <Link to="/bye">Bye</Link>
           </li>
           {!loading && data && data.me && (
             <li>
@@ -49,7 +46,7 @@ const Navigation: React.FC = () => {
           )}
         </ul>
       </nav>
-      {body}
+      {/* {body} */}
     </header>
   );
 };

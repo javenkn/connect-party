@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Routes from "./Routes";
 import { setAccessToken } from "./accessToken";
+import "./tailwind.generated.css";
 
 const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
