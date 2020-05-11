@@ -18,7 +18,8 @@ const Navigation: React.FC = () => {
     body = <h1>Please log in.</h1>;
   }
   return (
-    <header className="p-4 shadow">
+    <header className="p-4 shadow flex align-center">
+      <h1 className="mr-auto">CP🥳</h1>
       <nav>
         <ul className="flex justify-end">
           <li className="ml-4 border-solid border-x-0 border-b-4 border-transparent hover:border-gray-600">

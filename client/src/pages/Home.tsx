@@ -9,12 +9,7 @@ const Home: React.FC<RouteComponentProps> = () => {
 
   return (
     <div>
-      HOME
-      <ul>
-        {data.users.map((user) => (
-          <li key={user.id}>{user.email}</li>
-        ))}
-      </ul>
+      <h1 className="text-6xl text-center">Connect Party 🥳</h1>
     </div>
   );
 };

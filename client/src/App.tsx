@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Routes from "./Routes";
-import { setAccessToken } from "./accessToken";
+import { setAccessToken, getAccessToken } from "./accessToken";
 import "./tailwind.generated.css";
+import AuthenticatedApp from "./AuthenticatedApp";
+import UnauthenticatedApp from "./UnauthenticatedApp";
 
 const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
@@ -21,7 +22,7 @@ const App: React.FC = () => {
     return <div>Loading...</div>;
   }
 
-  return <Routes />;
+  return getAccessToken() ? <AuthenticatedApp /> : <UnauthenticatedApp />;
 };
 
 export default App;

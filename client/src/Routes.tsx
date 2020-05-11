@@ -9,11 +9,13 @@ function Routes() {
   return (
     <BrowserRouter>
       <Navigation />
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/register" component={Register} />
-        <Route exact path="/login" component={Login} />
-      </Switch>
+      <main className="p-6 h-full">
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/register" component={Register} />
+          <Route exact path="/login" component={Login} />
+        </Switch>
+      </main>
     </BrowserRouter>
   );
 }

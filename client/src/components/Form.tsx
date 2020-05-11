@@ -14,19 +14,29 @@ const Form: React.FC<FormProps> = ({ onSubmit, buttonText }) => {
   const [password, setPassword] = useState("");
 
   return (
-    <form onSubmit={(e) => onSubmit(e, email, password)}>
+    <form
+      className="flex flex-col p-4 w-1/4 mx-auto rounded-md shadow-lg"
+      onSubmit={(e) => onSubmit(e, email, password)}
+    >
       <input
+        className="p-2 mb-4 bg-gray-100"
         value={email}
-        placeholder="email"
+        placeholder="Email"
         onChange={(e) => setEmail(e.target.value)}
       />
       <input
+        className="p-2 mb-4 bg-gray-100"
         type="password"
         value={password}
-        placeholder="password"
+        placeholder="Password"
         onChange={(e) => setPassword(e.target.value)}
       />
-      <button type="submit">{buttonText}</button>
+      <button
+        className="px-4 py-1 rounded bg-purple-500 text-white inline-block mx-auto hover:bg-purple-600"
+        type="submit"
+      >
+        {buttonText}
+      </button>
     </form>
   );
 };
